@@ -42,7 +42,10 @@ _mlx_model_matches() {
 }
 
 _wait_for_mlx_health() {
-  local attempts="${1:-60}"
+  # 180 attempts × 2s = 6 minutes. Enough for a cold load of Llama 70B 8-bit
+  # on a warm file cache; not enough for a first-time download from HF — use
+  # resolve_mlx_model to point at a local path and avoid downloads entirely.
+  local attempts="${1:-180}"
   local i
   for i in $(seq 1 "$attempts"); do
     if curl -s http://localhost:4000/health 2>/dev/null | grep -q '"status": "ok"'; then
@@ -51,6 +54,28 @@ _wait_for_mlx_health() {
     sleep 2
   done
   return 1
+}
+
+# Resolve a model reference to something mlx-lm will load without triggering
+# a HuggingFace download. Prefers the local flat-folder path if it exists
+# (i.e. the layout created by scripts/download-and-import.sh — a simple
+# directory with config.json + safetensors files, NOT the standard
+# "models--org--name/snapshots/<commit>" hub layout). Falls back to the HF
+# id for users who haven't downloaded the model yet, in which case mlx-lm
+# will pull it on first run.
+#
+# Usage:
+#   MLX_MODEL_DEFAULT="$(resolve_mlx_model \
+#     "$HOME/.cache/huggingface/hub/gemma-4-31b-it-abliterated-4bit-mlx" \
+#     "divinetribe/gemma-4-31b-it-abliterated-4bit-mlx")"
+resolve_mlx_model() {
+  local local_path="$1"
+  local hf_id="$2"
+  if [ -d "$local_path" ] && [ -f "$local_path/config.json" ]; then
+    printf '%s\n' "$local_path"
+  else
+    printf '%s\n' "$hf_id"
+  fi
 }
 
 _stop_mlx_server() {

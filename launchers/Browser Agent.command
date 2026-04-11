@@ -9,7 +9,9 @@ source "$SCRIPT_DIR/lib/claude-local-common.sh"
 
 AGENT="$HOME/.local/browser-agent/agent.py"
 MODEL_NAME="${MLX_MODEL_LABEL:-Gemma 4 31B}"
-MLX_MODEL_DEFAULT="divinetribe/gemma-4-31b-it-abliterated-4bit-mlx"
+MLX_MODEL_DEFAULT="$(resolve_mlx_model \
+  "$HOME/.cache/huggingface/hub/gemma-4-31b-it-abliterated-4bit-mlx" \
+  "divinetribe/gemma-4-31b-it-abliterated-4bit-mlx")"
 
 # Browser mode: force-restart so MLX_BROWSER_MODE=1 is picked up even if a
 # non-browser-mode server is already running.

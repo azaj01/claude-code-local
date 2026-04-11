@@ -12,8 +12,11 @@ CLAUDE_BIN="${CLAUDE_BIN:-$HOME/.local/bin/claude}"
 
 # Default points at our own abliterated MLX upload:
 #   https://huggingface.co/divinetribe/Llama-3.3-70B-Instruct-abliterated-8bit-mlx
-# Override with MLX_MODEL=<your-path-or-hf-id>
-MLX_MODEL_DEFAULT="divinetribe/Llama-3.3-70B-Instruct-abliterated-8bit-mlx"
+# Override with MLX_MODEL=<your-path-or-hf-id>. Prefers a local flat-folder
+# cache if already downloaded, so we load directly instead of re-pulling.
+MLX_MODEL_DEFAULT="$(resolve_mlx_model \
+  "$HOME/.cache/huggingface/hub/Llama-3.3-70B-Instruct-abliterated-8bit-mlx" \
+  "divinetribe/Llama-3.3-70B-Instruct-abliterated-8bit-mlx")"
 
 ensure_mlx_server "${MLX_MODEL:-$MLX_MODEL_DEFAULT}" \
   "  Loading Llama 3.3 70B Abliterated on MLX (~7 tok/s, 8-bit full precision)..."

@@ -10,8 +10,12 @@ source "$SCRIPT_DIR/lib/claude-local-common.sh"
 
 CLAUDE_BIN="${CLAUDE_BIN:-$HOME/.local/bin/claude}"
 
-# Override with MLX_MODEL=<your-path-or-hf-id>
-MLX_MODEL_DEFAULT="divinetribe/gemma-4-31b-it-abliterated-4bit-mlx"
+# Override with MLX_MODEL=<your-path-or-hf-id>. Prefers a local flat-folder
+# cache if you already downloaded the model via scripts/download-and-import.sh,
+# so mlx-lm loads directly from disk instead of re-pulling from HF.
+MLX_MODEL_DEFAULT="$(resolve_mlx_model \
+  "$HOME/.cache/huggingface/hub/gemma-4-31b-it-abliterated-4bit-mlx" \
+  "divinetribe/gemma-4-31b-it-abliterated-4bit-mlx")"
 
 ensure_mlx_server "${MLX_MODEL:-$MLX_MODEL_DEFAULT}" \
   "  Loading Gemma 4 31B Abliterated on MLX (~15 tok/s, 4-bit)..."

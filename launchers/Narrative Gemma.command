@@ -18,8 +18,11 @@ CLAUDE_BIN="${CLAUDE_BIN:-$HOME/.local/bin/claude}"
 PROJECT_DIR="$(cd "$SCRIPT_DIR/.." && pwd)/NarrativeGemma"
 COMBINED_PROMPT="/tmp/narrative_gemma_combined_prompt.md"
 
-# Override the model with: MLX_MODEL=<your-path-or-hf-id>
-MLX_MODEL_DEFAULT="divinetribe/gemma-4-31b-it-abliterated-4bit-mlx"
+# Override the model with: MLX_MODEL=<your-path-or-hf-id>. Prefers a local
+# flat-folder cache to avoid re-downloading on every fresh launch.
+MLX_MODEL_DEFAULT="$(resolve_mlx_model \
+  "$HOME/.cache/huggingface/hub/gemma-4-31b-it-abliterated-4bit-mlx" \
+  "divinetribe/gemma-4-31b-it-abliterated-4bit-mlx")"
 
 # ── Build combined system prompt ──────────────────────────────────────
 # --bare disables auto-memory, so we hand-stitch the narration rules into
