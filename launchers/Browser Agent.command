@@ -42,22 +42,25 @@ if ! lsof -i :9222 >/dev/null 2>&1; then
     echo "  ERROR: Brave debug port (9222) didn't open. Try closing Brave and running again."
     exit 1
   fi
-  # Wait for at least one page/tab to register with CDP
-  echo -n "  Waiting for Brave tab"
-  for i in $(seq 1 10); do
-    if curl -s http://127.0.0.1:9222/json 2>/dev/null | grep -q '"webSocketDebuggerUrl"'; then
-      echo " ready!"
-      break
-    fi
-    echo -n "."
-    sleep 1
-  done
-  # If still no tabs, force-create one (Brave requires PUT)
-  if ! curl -s http://127.0.0.1:9222/json 2>/dev/null | grep -q '"webSocketDebuggerUrl"'; then
-    echo "  Creating new tab..."
-    curl -s -X PUT 'http://127.0.0.1:9222/json/new' >/dev/null 2>&1
-    sleep 1
+fi
+
+# Always ensure at least one page-type tab is registered with CDP, regardless
+# of whether Brave was already running. On macOS, Brave can keep the debug
+# port open even when every window is closed — lsof sees the port, but /json
+# returns zero page targets, and the agent bails with "No browser pages".
+echo -n "  Checking for Brave page tab"
+for i in $(seq 1 10); do
+  if curl -s http://127.0.0.1:9222/json 2>/dev/null | grep -q '"type": "page"'; then
+    echo " ready!"
+    break
   fi
+  echo -n "."
+  sleep 1
+done
+if ! curl -s http://127.0.0.1:9222/json 2>/dev/null | grep -q '"type": "page"'; then
+  echo "  No page tab found — creating new tab..."
+  curl -s -X PUT 'http://127.0.0.1:9222/json/new' >/dev/null 2>&1
+  sleep 1
 fi
 
 clear

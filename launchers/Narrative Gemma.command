@@ -106,6 +106,5 @@ ANTHROPIC_API_KEY=sk-local \
 CLAUDE_SESSION_LABEL="Narrative Gemma · Local" \
 exec "$CLAUDE_BIN" --model claude-sonnet-4-6 \
   --permission-mode auto \
-  --bare \
   --append-system-prompt-file "$COMBINED_PROMPT" \
   --mcp-config "$HOME/.claude.json"

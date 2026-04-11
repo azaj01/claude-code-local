@@ -32,6 +32,5 @@ ANTHROPIC_API_KEY=sk-local \
 CLAUDE_SESSION_LABEL="Gemma 4 · Local" \
 exec "$CLAUDE_BIN" --model claude-sonnet-4-6 \
   --permission-mode auto \
-  --bare \
   --append-system-prompt-file "$HOME/.claude/CLAUDE.md" \
   --mcp-config "$HOME/.claude.json"
