@@ -602,6 +602,23 @@ We didn't start here. We went through three generations in one night:
 
 ---
 
+## 🤝 Contributing & Ideas
+
+A lot has changed since this repo was one night of "can I run Claude Code on Ollama." It's now a full local-AI stack: a ~1000-line MLX-native Anthropic server, prompt-cache reuse, Gemma / Llama / Qwen native tool-call parsing, code mode (auto-strips Claude Code's 10K-token harness prompt for local models), the browser agent, narration mode, an iMessage pipeline, model-aware launcher restart — way past what "The Journey" table above actually covers.
+
+I built it because it solves *my* workflow end to end. Coding on planes, sensitive client work, drafting from my phone, handing off to local models when I don't want cloud latency or cloud bills. But the piece I'm proudest of is **Narrative Gemma** — double-click the launcher and Gemma 4 31B talks back through your speakers on every turn. The goal of that mode is a full coding session handled entirely through voice: no keyboard, no screen-watching, just speak and listen. The speak-out side works today. Voice-*input* (STT → Claude Code) is the obvious next step and the thing I'd most love help with.
+
+**If you have ideas, bug reports, a new launcher for a model I don't run, a better code-mode prompt, or a workflow this doesn't cover — open an issue or a PR.** I read them all. Especially interested in hearing from:
+
+- 🧠 People on older Apple Silicon (M1 / M2, 16–36 GB) who know which models actually fit and still do useful coding work
+- 🎤 Anyone who wants to wire voice-input into Narrative mode — Whisper, Apple's on-device Speech framework, kyutai's Moshi, whatever
+- 🔌 Folks with workflows this doesn't touch yet — what would *you* want from a local Claude Code?
+- 🐛 Anyone who runs into edge cases I'll never hit on an M5 Max with 128 GB
+
+Small PRs welcome, huge PRs welcome, issues with no PR welcome. The whole point is that it's yours to bend.
+
+---
+
 ## 🙏 Credits
 
 Built on the shoulders of giants:
