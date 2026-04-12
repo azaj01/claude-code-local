@@ -102,9 +102,9 @@ cd "$PROJECT_DIR" || exit 1
 # MLX_APPEND_SYSTEM_PROMPT_FILE above tells the server to append the
 # narration prompt instead.
 ANTHROPIC_BASE_URL=http://localhost:4000 \
-ANTHROPIC_API_KEY=sk-local \
 CLAUDE_SESSION_LABEL="Narrative Gemma · Local" \
 exec "$CLAUDE_BIN" --model claude-sonnet-4-6 \
   --permission-mode auto \
+  --settings "$SCRIPT_DIR/lib/local-settings.json" \
   --append-system-prompt-file "$COMBINED_PROMPT" \
   --mcp-config "$HOME/.claude.json"

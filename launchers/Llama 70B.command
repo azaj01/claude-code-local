@@ -29,9 +29,9 @@ echo "  → Running on Apple Silicon — no cloud, no API fees"
 echo ""
 
 ANTHROPIC_BASE_URL=http://localhost:4000 \
-ANTHROPIC_API_KEY=sk-local \
 CLAUDE_SESSION_LABEL="Llama 70B · Local" \
 exec "$CLAUDE_BIN" --model claude-sonnet-4-6 \
   --permission-mode auto \
+  --settings "$SCRIPT_DIR/lib/local-settings.json" \
   --append-system-prompt-file "$HOME/.claude/CLAUDE.md" \
   --mcp-config "$HOME/.claude.json"
