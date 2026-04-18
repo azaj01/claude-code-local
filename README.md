@@ -179,7 +179,7 @@ This is the part we're proudest of. **Your code never leaves your Mac.** Not for
    │             🚫 ZERO phone-home                              │
    └─────────────────────────────────────────────────────────────┘
                    │
-                   ✗  ←  Nothing crosses this line. Ever.
+                   ✗  ←  Nothing from *our* code crosses this line.
                    │
    ┌─────────────────────────────────────────────────────────────┐
    │                    ☁️  THE INTERNET                          │
@@ -197,6 +197,9 @@ This is the part we're proudest of. **Your code never leaves your Mac.** Not for
 | **MLX framework** | Apple | **0** | ✅ Safe |
 | **Model weights** | HuggingFace verified mlx-community repos | **0** at runtime | ✅ Safe |
 | **iMessage scripts** | Pure shell + AppleScript | localhost only (Studio Record port 17494) | ✅ Safe |
+| **Claude Code CLI** | Anthropic (closed-source binary) | **1 non-blocking** startup call to `api.anthropic.com` — inference still stays 100% local even if the call is firewalled | ⚠️ Disclosed |
+
+> ℹ️ **On that one exception:** Claude Code's own binary attempts a startup handshake to `api.anthropic.com` (likely version/session check). We can't suppress it — it's baked into Anthropic's closed-source CLI. **It's non-blocking**: block it at the firewall and Claude Code still works fine with your local model. Your prompts, code, and completions never leave the machine. Verified with `lsof -i -P` once the model is loaded.
 
 ### ⚠️ Transparency Note: Claude Code's Own Binary
 
