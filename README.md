@@ -4,6 +4,7 @@
     <strong>Three local AI brains. Four modes. One MacBook. Zero cloud.<br>Pick your fighter and run Claude Code 100% on-device.</strong>
   </p>
   <p align="center">
+    <a href="https://github.com/nicedreamzapp/claude-code-local/stargazers"><img src="https://img.shields.io/github/stars/nicedreamzapp/claude-code-local?style=for-the-badge&logo=github&color=f5c542&labelColor=1f2328" alt="GitHub stars"></a>
     <a href="#-the-lineup--pick-your-fighter"><img src="https://img.shields.io/badge/🥊_Lineup-3_Models-red?style=for-the-badge" alt="3 Models"></a>
     <a href="#-the-modes"><img src="https://img.shields.io/badge/🎮_Modes-4-purple?style=for-the-badge" alt="4 Modes"></a>
     <a href="#-benchmarks"><img src="https://img.shields.io/badge/⚡_Top_Speed-65_tok%2Fs-brightgreen?style=for-the-badge" alt="Speed"></a>
